@@ -1,8 +1,8 @@
-import { glob } from "glob";
-import graymatter from "gray-matter";
+import { glob } from 'glob';
+import graymatter from 'gray-matter';
 
-import { processMarkdown } from "./processer";
-import { ComputedField, DocumentType, Post, RawField } from "./type.d";
+import { processMarkdown } from './processer';
+import { ComputedField, DocumentType, Post, RawField } from './type.d';
 
 export class CompilePosts {
   private documentType: DocumentType;
@@ -16,7 +16,7 @@ export class CompilePosts {
   public async compile(): Promise<Post[]> {
     await this.getPaths();
     this.Posts = await Promise.all(
-      this.paths.map((path) => this.getPost(path))
+      this.paths.map((path) => this.getPost(path)),
     );
 
     return this.Posts;
@@ -26,7 +26,7 @@ export class CompilePosts {
     this.paths = await glob(`../content/${this.documentType}/**/*.md`).catch(
       (error) => {
         throw new Error(error);
-      }
+      },
     );
   }
 
@@ -36,13 +36,13 @@ export class CompilePosts {
     const computedField: ComputedField = {
       title: rawField.title,
       date: rawField.date,
-      description: rawField.description || "",
-      author: rawField.author || "",
+      description: rawField.description || '',
+      author: rawField.author || '',
       tags: rawField.tags,
       documentType: this.documentType,
-      img: rawField.img || "",
+      img: rawField.img || '',
       rootPath: rootPath,
-      slug: rootPath.split("/"),
+      slug: rootPath.split('/'),
     };
     const post: Post = {
       ...computedField,

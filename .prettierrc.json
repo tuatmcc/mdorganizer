@@ -1,6 +1,6 @@
 {
   "semi": true,
-  "trainlingComma": "all",
+  "trailingComma": "all",
   "endOfLine": "lf",
   "quoteProps": "as-needed",
   "singleQuote": true,
