@@ -1,6 +1,6 @@
 {
   "name": "@tuatmcc/mdorganizer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "minimalistic markdown organizer and converter",
   "author": "tuatmcc",
   "license": "MIT",
@@ -13,12 +13,15 @@
     "lint": "eslint .",
     "lint:fix": "eslint .  --fix && prettier --write ."
   },
-  "engines": {
-    "node": ">=16.0.0"
+  "bin": {
+    "mdorganizer": "./dist/index.bundle.js"
   },
-  "packageManager": "pnpm@8.5.0",
+  "engines": {
+    "node": ">=16.13.0"
+  },
   "dependencies": {
     "glob": "^10.2.6",
+    "rehype-format": "^4.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-pretty-code": "^0.9.5",
     "rehype-raw": "^6.1.1",
