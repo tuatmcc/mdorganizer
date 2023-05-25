@@ -3,7 +3,7 @@ import { Organizer } from './organizer';
 import { getUserConfig } from './config';
 import { PostConfig } from './type';
 
-const run = async () => {
+export const run = async () => {
   const organizerConfig = await getUserConfig();
   const { postConfigs } = organizerConfig;
   const dataListPromise = postConfigs.map(async (postConfig: PostConfig) => {
@@ -22,4 +22,3 @@ const run = async () => {
   );
 };
 
-export default run;
