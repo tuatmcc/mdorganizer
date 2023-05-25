@@ -1,25 +1,27 @@
-import { MetaFields } from '../mdorganizer.config';
-
-export type Post = MetaFields & {
-  postType: string;
-  markdown: string;
-  html: string;
+export type Field = {
+  [key: string]: {
+    type: 'string' | 'string[]' | 'string';
+    required?: boolean;
+  };
 };
 
+export type Post =
+  | Field
+  | {
+      rootPath: string;
+      postType: string;
+      markdown: string;
+      html: string;
+    };
+
 export type PostConfig = {
+  field: Field;
   postType: string;
   globPattern: string;
 };
 
-export type BaseConfig = {
-  outputDir: string;
-};
-
 export type OrganizerConfig = {
-  baseConfig: BaseConfig;
   postConfigs: PostConfig[];
 };
 
-export type Fields = {
-  [key: string]: string | string[] | undefined;
-};
+export default OrganizerConfig;

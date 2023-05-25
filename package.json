@@ -5,22 +5,25 @@
   "author": "tuatmcc",
   "license": "MIT",
   "exports": "./dist/index.bundle.js",
+  "types": "./src/type.d.ts",
   "type": "module",
   "scripts": {
     "setup": "pnpm i",
     "build": "node ./scripts/build.js",
     "start": "node ./dist/index.bundle.js",
     "lint": "eslint .",
-    "lint:fix": "eslint .  --fix && prettier --write ."
+    "lint:fix": "eslint .  --fix && prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "bin": {
-    "mdorganizer": "./dist/index.bundle.js"
+    "mdorganizer": "./bin/cli.js"
   },
   "engines": {
     "node": ">=16.13.0"
   },
   "dependencies": {
     "glob": "^10.2.6",
+    "gray-matter": "^4.0.3",
     "rehype-format": "^4.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-pretty-code": "^0.9.5",

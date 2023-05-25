@@ -3,4 +3,7 @@
 !/dist/
 !/dist/*
 
+!/src/
+!/src/type.d.ts
+
 !package.json
