@@ -1,3 +1,3 @@
 #! usr/bin/env node
 
-import run from '../dist/index.bundle';
+require('../dist/index.bundle.js').default();
