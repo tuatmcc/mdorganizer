@@ -1,3 +1,4 @@
-#! usr/bin/env node
+#!usr/bin/env node
 
-require('../dist/index.bundle.js').default();
+import { run } from '../dist/index.bundle.js';
+run().catch(e => console.error(e));
