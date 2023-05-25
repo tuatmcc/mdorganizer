@@ -1,25 +1,27 @@
-export type DocumentType = 'blog' | 'news';
-
-export type RawField = {
-  title: string;
-  date: string;
-  description?: string;
-  img?: string;
-  tags?: string[];
-  author?: string;
+export type Field = {
+  [key: string]: {
+    type: 'string' | 'string[]' | 'string';
+    required?: boolean;
+  };
 };
 
-export type ComputedField = RawField & {
-  // override as required
-  description: string;
-  img: string;
-  // additional fields
-  documentType: DocumentType;
-  slug: string[];
-  rootPath: string;
+export type Post =
+  | Field
+  | {
+      rootPath: string;
+      postType: string;
+      markdown: string;
+      html: string;
+    };
+
+export type PostConfig = {
+  field: Field;
+  postType: string;
+  globPattern: string;
 };
 
-export type Post = ComputedField & {
-  markdown: string;
-  html: string;
+export type OrganizerConfig = {
+  postConfigs: PostConfig[];
 };
+
+export default OrganizerConfig;

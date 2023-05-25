@@ -1,23 +1,30 @@
 {
-  "name": "mdorganizer",
-  "version": "0.1.0",
+  "name": "@tuatmcc/mdorganizer",
+  "version": "0.1.1",
   "description": "minimalistic markdown organizer and converter",
-  "author": "84656786+OJII3@users.noreply.github.com",
+  "author": "tuatmcc",
+  "license": "MIT",
   "exports": "./dist/index.bundle.js",
+  "types": "./src/type.d.ts",
   "type": "module",
   "scripts": {
     "setup": "pnpm i",
     "build": "node ./scripts/build.js",
     "start": "node ./dist/index.bundle.js",
     "lint": "eslint .",
-    "lint:fix": "eslint .  --fix && prettier --write ."
+    "lint:fix": "eslint .  --fix && prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "bin": {
+    "mdorganizer": "./bin/cli.js"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.13.0"
   },
-  "packageManager": "pnpm@8.5.0",
   "dependencies": {
     "glob": "^10.2.6",
+    "gray-matter": "^4.0.3",
+    "rehype-format": "^4.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-pretty-code": "^0.9.5",
     "rehype-raw": "^6.1.1",

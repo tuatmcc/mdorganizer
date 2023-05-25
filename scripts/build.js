@@ -11,7 +11,7 @@ const options = {
   target: 'node18',
   outdir: './dist',
   outExtension: { '.js': '.bundle.js' },
-  plugins: [nodeExternalsPlugin({ packagePath: '../package.json' })],
+  plugins: [nodeExternalsPlugin({ packagePath: 'package.json' })],
 };
 
 if (process.env.WATCH == 'true') {
