@@ -22,4 +22,4 @@ const run = async () => {
   );
 };
 
-export default run();
+export default run;
