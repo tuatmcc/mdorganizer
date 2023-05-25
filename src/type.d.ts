@@ -1,25 +1,25 @@
-export type DocumentType = 'blog' | 'news';
+import { MetaFields } from '../mdorganizer.config';
 
-export type RawField = {
-  title: string;
-  date: string;
-  description?: string;
-  img?: string;
-  tags?: string[];
-  author?: string;
-};
-
-export type ComputedField = RawField & {
-  // override as required
-  description: string;
-  img: string;
-  // additional fields
-  documentType: DocumentType;
-  slug: string[];
-  rootPath: string;
-};
-
-export type Post = ComputedField & {
+export type Post = MetaFields & {
+  postType: string;
   markdown: string;
   html: string;
+};
+
+export type PostConfig = {
+  postType: string;
+  globPattern: string;
+};
+
+export type BaseConfig = {
+  outputDir: string;
+};
+
+export type OrganizerConfig = {
+  baseConfig: BaseConfig;
+  postConfigs: PostConfig[];
+};
+
+export type Fields = {
+  [key: string]: string | string[] | undefined;
 };
