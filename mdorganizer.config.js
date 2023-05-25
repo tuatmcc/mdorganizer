@@ -15,7 +15,7 @@ const organizerConfig = {
   postConfigs: [
     {
       postType: 'blog',
-      globPattern: 'content/blog/**/*/index.md',
+      globPattern: 'content/blog/**/index.md',
       field: metaField,
     },
   ],
