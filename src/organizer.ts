@@ -28,6 +28,7 @@ export class Organizer {
       ...metaField,
       rootPath: rootPath,
       postType: postType,
+      globPattern: this.postConfig.globPattern,
       markdown: content,
       html: await processMarkdown(content),
     };

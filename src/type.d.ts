@@ -10,6 +10,7 @@ export type Post =
   | {
       rootPath: string;
       postType: string;
+      globPattern: string;
       markdown: string;
       html: string;
     };
