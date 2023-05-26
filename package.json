@@ -1,10 +1,10 @@
 {
   "name": "@tuatmcc/mdorganizer",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "minimalistic markdown organizer and converter",
   "author": "tuatmcc",
   "license": "MIT",
-  "exports": "./dist/index.bundle.js",
+  "exports": "./src/type.d.ts",
   "types": "./src/type.d.ts",
   "type": "module",
   "scripts": {
