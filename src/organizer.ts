@@ -24,6 +24,7 @@ export class Organizer {
     const { data, content } = graymatter.read(rootPath);
     const metaField = data as Field;
     const { postType } = this.postConfig;
+    // need to be consistent with generated post type in gentypes.ts
     const post: Post = {
       ...metaField,
       rootPath: rootPath,
