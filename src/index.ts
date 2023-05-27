@@ -1,4 +1,4 @@
-import { writeFile, mkdir } from 'node:fs';
+import { writeFile, mkdir, readdirSync } from 'node:fs';
 import { Organizer } from './organizer';
 import { getUserConfig } from './config';
 import type { PostConfig } from './type';
@@ -9,9 +9,12 @@ export const run = async () => {
   const { postConfigs } = organizerConfig;
 
   // if no .mdorganizer directory, create one
-  mkdir(`${process.cwd()}/.mdorganizer`, (err) => {
-    if (err) throw err;
-  });
+  if (!readdirSync(process.cwd()).includes('.mdorganizer')) {
+    mkdir(`${process.cwd()}/.mdorganizer`, (err) => {
+      if (err) throw err;
+      console.log('The .mdorganizer directory has been created!');
+    });
+  }
 
   // Generate post file
   const stringifiedPostList: string[] = await Promise.all(

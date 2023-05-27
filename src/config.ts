@@ -7,7 +7,7 @@ export const getUserConfig = async (): Promise<OrganizerConfig> => {
   const configFileName = fileNames.find((fileName) => {
     return fileName === 'mdorganizer.config.mjs';
   });
-  
+
   if (!configFileName) {
     throw new Error('mdorganizer.config.mjs is not found');
   }
