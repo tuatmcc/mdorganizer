@@ -6,7 +6,8 @@ import { generatePostType } from './gentypes';
 
 export const run = async () => {
   const organizerConfig = await getUserConfig();
-  const { postConfigs } = organizerConfig;
+  const { postConfigs, remarkRehypeOptions, remarkPlugins, rehypePlugins } =
+    organizerConfig;
 
   // if no .mdorganizer directory, create one
   if (!readdirSync(process.cwd()).includes('.mdorganizer')) {
@@ -19,7 +20,12 @@ export const run = async () => {
   // Generate post file
   const stringifiedPostList: string[] = await Promise.all(
     postConfigs.map(async (postConfig: PostConfig) => {
-      const organizer = new Organizer(postConfig);
+      const organizer = new Organizer(
+        postConfig,
+        remarkRehypeOptions,
+        remarkPlugins,
+        rehypePlugins,
+      );
       const postList = await organizer.compile();
       return `export const all${postConfig.postType}: PostType${
         postConfig.postType

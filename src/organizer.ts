@@ -3,14 +3,26 @@ import graymatter from 'gray-matter';
 
 import { Field, Post, PostConfig } from './type';
 import { processMarkdown } from './processer';
+import { Plugin } from 'unified';
 
 export class Organizer {
   private postConfig: PostConfig;
   private pathList: string[] = [];
   private postList: Post[] = [];
+  private remarkPlugins: Plugin[] = [];
+  private rehypePlugins: Plugin[] = [];
+  private remarkRehypeOptions: Record<string, unknown> = {};
 
-  constructor(postConfig: PostConfig) {
+  constructor(
+    postConfig: PostConfig,
+    remarkRehypeOptions: Record<string, unknown>,
+    remarkPlugins: Plugin[],
+    rehypePlugins: Plugin[],
+  ) {
     this.postConfig = postConfig;
+    this.remarkRehypeOptions = remarkRehypeOptions;
+    this.remarkPlugins = remarkPlugins;
+    this.rehypePlugins = rehypePlugins;
   }
 
   private async getPathList(): Promise<void> {
@@ -31,7 +43,12 @@ export class Organizer {
       postType: postType,
       globPattern: this.postConfig.globPattern,
       markdown: content,
-      html: await processMarkdown(content),
+      html: await processMarkdown(
+        this.remarkRehypeOptions,
+        this.remarkPlugins,
+        this.rehypePlugins,
+        content,
+      ),
     };
 
     return post;

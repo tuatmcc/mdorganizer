@@ -1,3 +1,5 @@
+import { Plugin } from 'unified';
+
 export type Field = {
   [key: string]: {
     type: 'string' | 'string[]' | 'string';
@@ -22,6 +24,9 @@ export type PostConfig = {
 };
 
 export type OrganizerConfig = {
+  remarkRehypeOptions: Record<string, unknown>;
+  remarkPlugins: Plugin[];
+  rehypePlugins: Plugin[];
   postConfigs: PostConfig[];
 };
 
