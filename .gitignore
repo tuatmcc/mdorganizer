@@ -2,3 +2,5 @@
 /dist/
 /.mdorganizer/
 /content/
+
+mdorganizer.config.js

@@ -1,40 +1,22 @@
-import rehypeFormat from 'rehype-format';
-import rehypeKatex from 'rehype-katex';
-import rehypePrettyCode, { Options } from 'rehype-pretty-code';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
-import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
+import { unified, Plugin } from 'unified';
 
-const rpcOptions: Partial<Options> = {
-  theme: 'github-dark',
-  onVisitLine(node) {
-    if (node.children.length === 0) {
-      node.children = [{ type: 'text', value: ' ' }];
-    }
-  },
-  onVisitHighlightedLine(node) {
-    node.properties.className.push('line--highlighted');
-  },
-  onVisitHighlightedWord(node) {
-    node.properties.className = ['word--highlighted'];
-  },
-};
-
-export const processMarkdown = async (markdown: string): Promise<string> => {
+export const processMarkdown = async (
+  remarkRehypeOptions: Record<string, unknown>,
+  remarkPlugins: Plugin[],
+  rehypePlugins: Plugin[],
+  markdown: string,
+): Promise<string> => {
   const processer = unified();
   processer
-    .use(remarkParse)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw)
-    .use(rehypePrettyCode, rpcOptions)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
-    .use(rehypeKatex)
-    .use(rehypeFormat);
+    .use(remarkParse) // always use remark-parse to parse markdown to mdast
+    .use(remarkPlugins) // user can pass in remark plugins
+    .use(remarkRehype, {
+      // always use remark-rehype to convert markdown to html
+      ...remarkRehypeOptions,
+      allowDangerousHtml: true,
+    })
+    .use(rehypePlugins); // user can pass in rehype plugins
   return processer.process(markdown).then((v) => v.toString());
 };
-
-export default processMarkdown;

@@ -1,4 +1,11 @@
-// import type { OrganizerConfig, Field } from './src/type';
+import rehypeFormat from 'rehype-format';
+import rehypeKatex from 'rehype-katex';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
 
 /** @type {import('./src/type.d').Field} */
 const metaField = {
@@ -10,8 +17,40 @@ const metaField = {
   author: { type: 'string' },
 };
 
+/** @type {import('rehype-pretty-code').Options */
+const rpcOptions = {
+  theme: 'github-dark',
+  onVisitLine(node) {
+    if (node.children.length === 0) {
+      node.children = [{ type: 'text', value: ' ' }];
+    }
+  },
+  onVisitHighlightedLine(node) {
+    node.properties.className.push('line--highlighted');
+  },
+  onVisitHighlightedWord(node) {
+    node.properties.className = ['word--highlighted'];
+  },
+};
 /** @type {import('./src/type.d').OrganizerConfig} */
 const organizerConfig = {
+  remarkPlugins: [
+    remarkParse,
+    [
+      remarkRehype,
+      {
+        allowDangerousHtml: true,
+      },
+    ],
+  ],
+  rehypePlugins: [
+    rehypeRaw,
+    [rehypePrettyCode, rpcOptions],
+    rehypeSanitize,
+    rehypeStringify,
+    rehypeKatex,
+    rehypeFormat,
+  ],
   postConfigs: [
     {
       postType: 'blog',
