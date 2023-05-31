@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A cli tool to convert Markdown into typed metadata and HTML",
   "author": "tuatmcc",
   "license": "MIT",
