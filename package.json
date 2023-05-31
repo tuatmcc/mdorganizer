@@ -1,11 +1,11 @@
 {
-  "name": "@tuatmcc/mdorganizer",
-  "version": "1.2.0",
-  "description": "minimalistic markdown organizer and converter",
+  "name": "mdorganizer",
+  "version": "1.2.1",
+  "description": "A cli tool to convert Markdown into typed metadata and HTML",
   "author": "tuatmcc",
   "license": "MIT",
-  "exports": "./src/type.d.ts",
-  "types": "./src/type.d.ts",
+  "exports": "./dist/index.bundle.js",
+  "types": "./lib/type.d.ts",
   "type": "module",
   "scripts": {
     "setup": "npm i && npx husky-init && npx husky install",
