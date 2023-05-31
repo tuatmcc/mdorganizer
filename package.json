@@ -1,17 +1,20 @@
 {
   "name": "mdorganizer",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "A cli tool to convert Markdown into typed metadata and HTML",
   "author": "tuatmcc",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/tuatmcc/mdorganizer",
+    "type": "git"
+  },
   "exports": "./dist/index.bundle.js",
   "types": "./lib/type.d.ts",
   "type": "module",
   "scripts": {
-    "setup": "npm i && npx husky-init && npx husky install",
     "build": "node ./scripts/build.js",
     "start": "node ./bin/cli.js",
-    "lint": "eslint .",
+    "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint ./src/*  --fix && prettier --write .",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install"
