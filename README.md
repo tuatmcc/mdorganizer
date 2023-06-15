@@ -1,3 +1,5 @@
+**ホームページ用に使ってたライブラリの開発ペースが想定より遅く、依存性の衝突が気になって自作したのですが、個人的な都合で開発を続けたりメンテナンスする余裕がなくなったので、出来たばかりではありますが、開発終了とします。お騒がせしました**
+
 # Markdown-Organizer
 
 A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter and HTML.
