@@ -1,17 +1,20 @@
 {
-  "name": "@tuatmcc/mdorganizer",
-  "version": "1.1.0",
-  "description": "minimalistic markdown organizer and converter",
+  "name": "mdorganizer",
+  "version": "1.2.3",
+  "description": "A cli tool to convert Markdown into typed metadata and HTML",
   "author": "tuatmcc",
   "license": "MIT",
-  "exports": "./src/type.d.ts",
-  "types": "./src/type.d.ts",
+  "repository": {
+    "url": "https://github.com/tuatmcc/mdorganizer",
+    "type": "git"
+  },
+  "exports": "./dist/index.bundle.js",
+  "types": "./lib/type.d.ts",
   "type": "module",
   "scripts": {
-    "setup": "npm i && npx husky-init && husky install",
     "build": "node ./scripts/build.js",
     "start": "node ./bin/cli.js",
-    "lint": "eslint .",
+    "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint ./src/*  --fix && prettier --write .",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install"
@@ -36,14 +39,13 @@
     "esbuild-node-externals": "^1.7.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
-    "husky": "^8.0.0",
     "prettier": "^2.8.8",
-    "typescript": "^5.0.4",
     "rehype-format": "^4.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-pretty-code": "^0.9.5",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
-    "rehype-stringify": "^9.0.3"
+    "rehype-stringify": "^9.0.3",
+    "typescript": "^5.0.4"
   }
 }
