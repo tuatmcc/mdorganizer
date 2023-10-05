@@ -1,5 +1,3 @@
-**ホームページ用に使ってたライブラリの開発ペースが想定より遅く、依存性の衝突が気になって自作したのですが、個人的な都合で開発を続けたりメンテナンスする余裕がなくなったので、出来たばかりではありますが、開発終了とします。お騒がせしました**
-
 # Markdown-Organizer
 
 A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter and HTML.
@@ -19,7 +17,7 @@ A CLI tool to convert markdown files into TypeScript modules, with fully typed f
 ### Install
 
 ```sh
-npm i mdorganizer
+npm i -D mdorganizer
 ```
 
 ### Setup
@@ -129,13 +127,13 @@ const {
 
 We try to make this package as simple as possible. So, we won't have many features(such as direct integration for React Components).
 
-[x] Convert markdown into HTML using `unified`, `rehype` and `remark`.
-[x] Organize markdown files into TypeScript Modules.
-[x] Custom `globPattern` options
-[x] Custom front matter with type definition
-[ ] Add type definition using `jsdoc` in `mdorganizer.config.mjs` file
-[x] Custom `rehype`, `remark` plugins
-[ ] Appropriate error handling
+- [x] Convert markdown into HTML using `unified`, `rehype` and `remark`.
+- [x] Organize markdown files into TypeScript Modules.
+- [x] Custom `globPattern` options
+- [x] Custom front matter with type definition
+- [ ] Add type definition using `jsdoc` in `mdorganizer.config.mjs` file
+- [x] Custom `rehype`, `remark` plugins
+- [ ] Appropriate error handling
 
 ---
 
