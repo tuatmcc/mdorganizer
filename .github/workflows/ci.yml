@@ -1,0 +1,21 @@
+name: Node.js CI
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: action/checkout@v4
+      - uses: action/setup-node@v3
+        with:
+          node-version: '18.x'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
