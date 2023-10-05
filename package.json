@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A cli tool to convert Markdown into typed metadata and HTML",
   "author": "tuatmcc",
   "license": "MIT",
@@ -16,8 +16,7 @@
     "start": "node ./bin/cli.js",
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint ./src/*  --fix && prettier --write .",
-    "typecheck": "tsc --noEmit",
-    "prepare": "husky install"
+    "typecheck": "tsc --noEmit"
   },
   "bin": {
     "mdorganizer": "./bin/cli.js"
