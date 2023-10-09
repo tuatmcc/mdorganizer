@@ -44,7 +44,7 @@
     "rehype-pretty-code": "^0.9.5",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
-    "rehype-stringify": "^9.0.3",
+    "rehype-stringify": "^10.0.0",
     "typescript": "^5.0.4"
   }
 }
