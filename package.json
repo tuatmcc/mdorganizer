@@ -16,7 +16,8 @@
     "start": "node ./bin/cli.js",
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint ./src/*  --fix && prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
   },
   "bin": {
     "mdorganizer": "./bin/cli.js"
@@ -45,6 +46,7 @@
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
     "rehype-stringify": "^9.0.3",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.34.6"
   }
 }

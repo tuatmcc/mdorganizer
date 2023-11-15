@@ -10,5 +10,6 @@
     "ecmaVersion": 2022
   },
   "root": true,
-  "rules": {}
+  "rules": {},
+  "ignorePatterns": ["dist/", "node_modules/", "test/*.mock.ts"]
 }
