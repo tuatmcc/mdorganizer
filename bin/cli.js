@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-import { run } from '../dist/index.bundle.js';
-run().catch((e) => console.error(e));
+import { main } from '../dist/index.bundle.js';
+main().catch((e) => console.error(e));

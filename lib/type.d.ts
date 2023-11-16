@@ -1,1 +1,1 @@
-export { OrganizerConfig } from '../src/type';
+export { UserConfig } from '@/types';

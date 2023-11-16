@@ -1,70 +1,33 @@
-import { writeFile, mkdir, readdirSync } from 'node:fs';
-import { Organizer } from './organizer';
-import { getUserConfig } from './config';
-import type { PostConfig } from './type';
-import { generatePostType } from './gentypes';
+import { program } from 'commander';
+import { UserConfig } from '@/types';
+import { MdOrganizer } from './mdorganizer';
 
-export const run = async () => {
-  const organizerConfig = await getUserConfig();
-  const { postConfigs, remarkRehypeOptions, remarkPlugins, rehypePlugins } =
-    organizerConfig;
-
-  // if no .mdorganizer directory, create one
-  if (!readdirSync(process.cwd()).includes('.mdorganizer')) {
-    mkdir(`${process.cwd()}/.mdorganizer`, (err) => {
-      if (err) throw err;
-      console.log('The .mdorganizer directory has been created!');
-    });
-  }
-
-  // Generate post file
-  const stringifiedPostList: string[] = await Promise.all(
-    postConfigs.map(async (postConfig: PostConfig) => {
-      const organizer = new Organizer(
-        postConfig,
-        remarkRehypeOptions,
-        remarkPlugins,
-        rehypePlugins,
-      );
-      const postList = await organizer.compile();
-      return `export const all${postConfig.postType}: PostType${
-        postConfig.postType
-      }[] = ${JSON.stringify(postList)};`;
-    }),
-  );
-  writeFile(
-    `${process.cwd()}/.mdorganizer/post.ts`,
-    `import type {${postConfigs
-      .map((x) => `PostType${x.postType}`)
-      .join(',')}} from './type';
-${stringifiedPostList.join('\n\n')}
-export const allPosts = [${postConfigs.map((x) => `...all${x.postType}`)}];`,
-    (err) => {
-      if (err) throw err;
-      console.log('The post file has been generated!');
-    },
-  );
-
-  // Generate type file
-  const stringifiedTypeList: string[] = postConfigs.map((postConfig) => {
-    return generatePostType(postConfig);
-  });
-  writeFile(
-    `${process.cwd()}/.mdorganizer/type.ts`,
-    stringifiedTypeList.join('\n'),
-    (err) => {
-      if (err) throw err;
-      console.log('The type file has been generated!');
-    },
-  );
-
-  // Generate index file
-  writeFile(
-    `${process.cwd()}/.mdorganizer/index.ts`,
-    `export * from './post';\nexport * from './type';`,
-    (err) => {
-      if (err) throw err;
-      console.log('The index file has been generated!');
-    },
-  );
+export const generate = async (userConfig: UserConfig): Promise<void> => {
+  const mdOrganizer = new MdOrganizer(userConfig);
+  await mdOrganizer.generateGeneratedFolder();
+  await mdOrganizer.generateAllCategoryTypeFiles();
+  await mdOrganizer.generateAllModules();
+  await mdOrganizer.generateIndexFiles();
+  console.log('All files generated!');
 };
+
+export const main = async () => {
+  program
+    .option('--config <path>', 'path to config file')
+    .action(async (options) => {
+      const configPath = options.config
+        ? options.config.replace(/\.ts$/, '')
+        : 'mdorganizer.config';
+      try {
+        const config = await import(configPath);
+        await generate(config.default);
+      } catch (err) {
+        console.error(
+          'Could not find mdorganizer.config.ts in the current directory or the config path specified.',
+        );
+      }
+    })
+    .parse(process.argv);
+};
+
+main();
