@@ -1,16 +1,14 @@
 # Markdown-Organizer
 
-A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter and HTML.
+A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter.
 
 - Simple
   - Very Few dependencies
 - Customizable
   - `globPattern` options for markdown files location
   - User defined front matter with type definition
-  - `rehype`, `remark` plugins
 - Fully Typed
   - TypeScript Only
-  - Fully typed front matter
 
 ## Usage
 
@@ -22,40 +20,25 @@ npm i -D mdorganizer
 
 ### Setup
 
-1. Create `mdorganizer.config.mjs` file.
+1. Create `mdorganizer.config.ts` file.
 
-```js
-import rehypeFormat from 'rehype-format';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
+```ts
+import { UserConfig } from './lib/type';
 
-/** @type {import('./src/type.d').Field} */
-const metaField = {
-  title: { type: 'string', required: true },
-  date: { type: 'string', required: true },
-  description: { type: 'string' },
-  img: { type: 'string' },
-  tags: { type: 'string[]' },
-  author: { type: 'string' },
-};
-
-/** @type {import('./src/type.d').OrganizerConfig} */
-const organizerConfig = {
-  remarkPlugins: [],
-  rehypePlugins: [rehypeRaw, rehypeSanitize, rehypeStringify, rehypeFormat],
-  postConfigs: [
+export default {
+  documents: [
     {
-      postType: 'Blog',
-      globPattern: 'content/blog/**/index.md',
-      field: metaField,
+      documentCategory: 'blog',
+      globPattern: 'content/blog/**/*.md',
+      fields: {
+        title: {
+          type: 'string',
+          required: true,
+        },
+      },
     },
   ],
-};
-
-export default organizerConfig;
+} satisfies UserConfig;
 ```
 
 2. Add `npm scripts`
@@ -122,18 +105,6 @@ const {
   html, // string
 } = allBlog[0];
 ```
-
-## Features
-
-We try to make this package as simple as possible. So, we won't have many features(such as direct integration for React Components).
-
-- [x] Convert markdown into HTML using `unified`, `rehype` and `remark`.
-- [x] Organize markdown files into TypeScript Modules.
-- [x] Custom `globPattern` options
-- [x] Custom front matter with type definition
-- [ ] Add type definition using `jsdoc` in `mdorganizer.config.mjs` file
-- [x] Custom `rehype`, `remark` plugins
-- [ ] Appropriate error handling
 
 ---
 
