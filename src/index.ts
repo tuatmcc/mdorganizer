@@ -1,4 +1,5 @@
 import { program } from 'commander';
+import { join } from 'path';
 import { UserConfig } from '@/types';
 import { MdOrganizer } from './mdorganizer';
 
@@ -19,7 +20,7 @@ export const main = async () => {
         ? options.config.replace(/\.ts$/, '')
         : 'mdorganizer.config';
       try {
-        const config = await import(configPath);
+        const config = await import(join(process.cwd(), configPath));
         await generate(config.default);
       } catch (err) {
         console.error(
