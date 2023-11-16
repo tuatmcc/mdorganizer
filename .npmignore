@@ -3,6 +3,8 @@
 !/dist/
 !/dist/*
 
+!/lib/type.d.ts
+
 !/src/
 !/src/type.d.ts
 
