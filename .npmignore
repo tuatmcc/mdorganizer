@@ -6,6 +6,6 @@
 !/lib/type.d.ts
 
 !/src/
-!/src/type.d.ts
+!/src/types.ts
 
 !package.json
