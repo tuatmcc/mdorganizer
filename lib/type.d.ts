@@ -1,1 +1,1 @@
-export { UserConfig } from '@/types';
+export { UserConfig, FieldConfig, DocumentConfig } from '@/types';
