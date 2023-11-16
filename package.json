@@ -1,7 +1,7 @@
 {
   "name": "mdorganizer",
-  "version": "1.2.4",
-  "description": "A cli tool to convert Markdown into typed metadata and HTML",
+  "version": "2.0.0",
+  "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
   "repository": {
@@ -23,14 +23,12 @@
     "mdorganizer": "./bin/cli.js"
   },
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
+    "commander": "^11.1.0",
     "glob": "^10.2.6",
-    "gray-matter": "^4.0.3",
-    "remark-parse": "^10.0.2",
-    "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2"
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -40,12 +38,6 @@
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
-    "rehype-format": "^4.0.1",
-    "rehype-katex": "^6.0.3",
-    "rehype-pretty-code": "^0.9.5",
-    "rehype-raw": "^6.1.1",
-    "rehype-sanitize": "^5.0.1",
-    "rehype-stringify": "^9.0.3",
     "typescript": "^5.0.4",
     "vitest": "^0.34.6"
   }

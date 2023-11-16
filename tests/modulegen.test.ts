@@ -9,11 +9,13 @@ it('generate modules', async () => {
   const config = await import('./mock/mdorganizer.config');
   const moduleGenerator = new ModuleGenerator(config.default);
 
-  const rootPath = 'tests/mock/content/blog/hello/index.md';
-  const file = await readFile(rootPath, {
-    encoding: 'utf8',
-    flag: 'r',
-  });
+  const file = await readFile(
+    'tests/mock/generated/tests_mock_content_blog_hello_index.ts',
+    {
+      encoding: 'utf8',
+      flag: 'r',
+    },
+  );
 
   const generated: CategoryModule[] = await moduleGenerator.generateAll();
 
@@ -22,8 +24,9 @@ it('generate modules', async () => {
       documentCategory: 'blog',
       documentModules: [
         {
-          documentId: 'tests-mock-content-blog-hello-index',
-          generatedModuleString: file,
+          rootPath: 'tests/mock/content/blog/hello/index.md',
+          documentId: 'tests_mock_content_blog_hello_index',
+          generatedModuleString: file.trim(),
         },
       ],
     },

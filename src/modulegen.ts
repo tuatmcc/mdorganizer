@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises';
 import graymatter from 'gray-matter';
 
 type DocumentModule = {
+  rootPath: string;
   documentId: string;
   generatedModuleString: string;
 };
@@ -31,6 +32,7 @@ export class ModuleGenerator {
       const documentModules = await Promise.all(
         paths.map(async (path) => {
           return {
+            rootPath: path,
             documentId: `${path
               .replace(/\\/g, '/')
               .replaceAll('/', '_')
