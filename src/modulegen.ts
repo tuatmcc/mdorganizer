@@ -1,4 +1,4 @@
-import { UserConfig, DocumentConfig } from '@/types';
+import { UserConfig, CategoryConfig } from '@/types';
 import { glob } from 'glob';
 import { readFile } from 'fs/promises';
 import graymatter from 'gray-matter';
@@ -15,11 +15,11 @@ export type CategoryModule = {
 };
 
 export class ModuleGenerator {
-  private documentConfigs: DocumentConfig[];
+  private categoryConfigs: CategoryConfig[];
   private categoryModules: CategoryModule[];
 
   constructor(userConfig: UserConfig) {
-    this.documentConfigs = userConfig.documents;
+    this.categoryConfigs = userConfig.documents;
     this.categoryModules = userConfig.documents.map((docuementConfig) => ({
       documentCategory: docuementConfig.documentCategory,
       documentModules: [],
@@ -27,23 +27,35 @@ export class ModuleGenerator {
   }
 
   async generateAll(): Promise<CategoryModule[]> {
-    for (const documentConfig of this.documentConfigs) {
-      const paths = await glob(documentConfig.globPattern);
-      const documentModules: DocumentModule[] = [];
-      paths.forEach(async (path) => {
-        try {
-          documentModules.push({
-            rootPath: path,
-            documentId: `${path
-              .replace(/\\/g, '/')
-              .replaceAll('/', '_')
-              .replace('.md', '')}`,
-            generatedModuleString: await this.generate(path, documentConfig),
-          });
-        } catch (e) {
-          console.log(`Skipping ${path} due to error: ${e.message}`);
-        }
-      });
+    for (const categoryConfig of this.categoryConfigs) {
+      const paths = await glob(categoryConfig.globPattern);
+      // generate modules for each document
+      const documentModules = await Promise.all(
+        paths
+          .map(async (path) => {
+            try {
+              return {
+                rootPath: path,
+                documentId: `${path
+                  .replace(/\\/g, '/')
+                  .replaceAll('/', '_')
+                  .replace('.md', '')}`,
+                generatedModuleString: await this.generate(
+                  path,
+                  categoryConfig,
+                ),
+              } satisfies DocumentModule;
+            } catch (e) {
+              console.log(`Skipping ${path} due to error: ${e.message}`);
+              return null;
+            }
+          })
+          .filter((documentModule) => documentModule !== null),
+      );
+
+      console.log(
+        `Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`,
+      );
 
       this.categoryModules = this.categoryModules.map((categoryModule) => {
         return {
@@ -66,7 +78,7 @@ export class ModuleGenerator {
    */
   async generate(
     rootPath: string,
-    documentConfig: DocumentConfig,
+    documentConfig: CategoryConfig,
   ): Promise<string> {
     const { data, content } = graymatter(await readFile(rootPath, 'utf8'));
     // validate data against FieldsConfig

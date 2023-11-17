@@ -9,7 +9,7 @@ export type FieldConfig = {
   after?: (value: any) => typeof value;
 };
 
-export type DocumentConfig = {
+export type CategoryConfig = {
   globPattern: string;
   documentCategory: string;
   fields: {
@@ -31,5 +31,5 @@ export type Document = {
 };
 
 export type UserConfig = {
-  documents: DocumentConfig[];
+  documents: CategoryConfig[];
 };

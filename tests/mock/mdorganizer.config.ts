@@ -1,6 +1,6 @@
-import { DocumentConfig } from '@/types';
+import { CategoryConfig } from '@/types';
 
-const blog: DocumentConfig = {
+const blog: CategoryConfig = {
   documentCategory: 'blog',
   globPattern: 'tests/mock/content/blog/**/index.md',
   fields: {
