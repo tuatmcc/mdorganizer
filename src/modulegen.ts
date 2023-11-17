@@ -136,7 +136,7 @@ export default {
   documentCategory: '${documentConfig.documentCategory}',
   globPattern: '${documentConfig.globPattern}',
   rootPath: '${rootPath}',
-  content: '${content.replace(/\n/g, '\\n')}',
+  content: '${content.replace(/\n/g, '\\n').replace(/'/g, "\\'")}',
   fields: {
     ${Object.keys(frontmatter)
       .map((key) => {
