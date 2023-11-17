@@ -39,11 +39,19 @@ export default {
           type: 'string[]',
           after: (tags: string[]) => tags.map((tag) => tag.toLowerCase()),
         },
+        author: {
+          type: 'string',
+        },
+        img: {
+          type: 'string',
+        },
       },
     },
   ],
 } satisfies UserConfig;
 ```
+
+Available field types are `string`, `string[]`, `boolean`, `number`.
 
 2. Add `npm scripts`
 
@@ -66,7 +74,7 @@ npm run build
 
 `prebuild` script will be automatically run before `build`.
 
-Or, you can run command using `npx`.
+Or, you can run manually using `npx`.
 
 ```sh
 npx mdorganizer
@@ -79,7 +87,7 @@ Example of original markdown file
 ```md
 ---
 title: Hello World
-date: 2021-09-01
+date: '2021-09-01'
 description: This is a sample post.
 img: /img/hello-world.png
 tags: [sample, hello, world]
@@ -92,22 +100,18 @@ author: tuatmcc
 Example usage of generated module
 
 ```ts
-import type { PostTypeBlog } from '.mdorganizer';
-import { allBlog } from '.mdorganizer'; // allBlog is an array of PostTypeBlog
+import type { BlogDocument } from '.mdorganizer/generated'; // import generated type
+import { allBlogDocuments } from '.mdorganizer/generated'; // import generated modules
+
+const { documentCategory, rootPath, fields, content } = allBlogDocuments[0];
 
 const {
   title, // string
   date, // string
-  description, // string | undefined
   img, // string | undefined
   tags, // string[] | undefined
   author, // string | undefined
-  rootPath, // string
-  globPattern, // string
-  postType, // string
-  markdown, // string
-  html, // string
-} = allBlog[0];
+} = feilds;
 ```
 
 ---

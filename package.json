@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "type": "git"
   },
   "exports": "./dist/index.bundle.mjs",
-  "types": "./lib/type.d.ts",
+  "types": "./lib/types.d.ts",
   "type": "module",
   "scripts": {
     "build": "node ./scripts/build.js",
@@ -41,6 +41,7 @@
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
+    "tsx": "^4.1.2",
     "typescript": "^5.0.4",
     "vitest": "^0.34.6"
   }
