@@ -1,7 +1,7 @@
 import { TypeGenerator } from './typegen';
 import { ModuleGenerator } from './modulegen';
 import { type CategoryConfig, type UserConfig } from './types';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, rm } from 'fs/promises';
 
 export class MdOrganizer {
   private typeGenerator: TypeGenerator;
@@ -15,6 +15,7 @@ export class MdOrganizer {
   }
 
   async generateGeneratedFolder(): Promise<void> {
+    await rm('.mdorganizer/generated', { recursive: true, force: true });
     await mkdir('.mdorganizer/generated', { recursive: true });
     for (const config of this.documentConfigs) {
       await mkdir(`.mdorganizer/generated/${config.documentCategory}`, {

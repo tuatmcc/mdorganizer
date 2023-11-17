@@ -2,6 +2,7 @@ import { UserConfig, CategoryConfig } from '@/types';
 import { glob } from 'glob';
 import { readFile } from 'fs/promises';
 import graymatter from 'gray-matter';
+import { v4 } from 'uuid';
 
 type DocumentModule = {
   rootPath: string;
@@ -35,10 +36,7 @@ export class ModuleGenerator {
           try {
             return {
               rootPath: path,
-              documentId: `${path
-                .replace(/\\/g, '/')
-                .replaceAll('/', '_')
-                .replace('.md', '')}`,
+              documentId: `document__${v4().replace(/-/g, '_')}`,
               generatedModuleString: await this.generate(path, categoryConfig),
             } satisfies DocumentModule;
           } catch (e) {
@@ -48,6 +46,7 @@ export class ModuleGenerator {
         }),
       );
 
+      // filter out nulls
       documentModules = documentModules.filter(
         (documentModule) => documentModule !== null,
       );
