@@ -43,7 +43,6 @@ export class MdOrganizer {
 
   async generateAllModules(): Promise<void> {
     const categoryModules = await this.moduleGenerator.generateAll();
-    console.log(categoryModules);
     for (const categoryModule of categoryModules) {
       for (const doc of categoryModule.documentModules) {
         await writeFile(
