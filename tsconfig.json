@@ -4,10 +4,11 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "outDir": "./dist",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "rootDir": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "include": ["./src/**/*", "./tests/**/*"]
 }
