@@ -1,4 +1,3 @@
-import { program } from 'commander';
 import { UserConfig } from '@/types';
 import { MdOrganizer } from './mdorganizer';
 import { getConfig } from './config';
@@ -13,14 +12,10 @@ export const generate = async (userConfig: UserConfig): Promise<void> => {
 };
 
 export const main = async () => {
-  program
-    .action(async () => {
-      try {
-        const config = await getConfig();
-        await generate(config);
-      } catch (err) {
-        console.error(err);
-      }
-    })
-    .parse(process.argv);
+  try {
+    const config = await getConfig();
+    await generate(config);
+  } catch (err) {
+    console.error(err);
+  }
 };
