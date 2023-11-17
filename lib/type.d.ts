@@ -1,1 +1,1 @@
-export { UserConfig, FieldConfig, DocumentConfig } from '../src/types';
+export { UserConfig, FieldConfig, CategoryConfig } from '../src/types';
