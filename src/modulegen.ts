@@ -55,12 +55,17 @@ export class ModuleGenerator {
         `Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`,
       );
 
-      this.categoryModules = this.categoryModules.map((categoryModule) => {
-        return {
-          documentCategory: categoryModule.documentCategory,
-          documentModules: documentModules,
-        };
-      });
+      try {
+        this.categoryModules[
+          this.categoryModules.findIndex((m) => {
+            m.documentCategory === categoryConfig.documentCategory;
+          })
+        ].documentModules = documentModules;
+      } catch (e) {
+        console.log(
+          `Skipping ${categoryConfig.documentCategory} due to error: ${e.message}`,
+        );
+      }
     }
     return this.categoryModules;
   }
