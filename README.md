@@ -43,8 +43,8 @@ export default {
           type: 'string',
         },
         img: {
-          type: 'string'
-        }
+          type: 'string',
+        },
       },
     },
   ],
@@ -103,12 +103,7 @@ Example usage of generated module
 import type { BlogDocument } from '.mdorganizer/generated'; // import generated type
 import { allBlogDocuments } from '.mdorganizer/generated'; // import generated modules
 
-const {
-  documentCategory,
-  rootPath,
-  fields,
-  content,
-} = allBlogDocuments[0];
+const { documentCategory, rootPath, fields, content } = allBlogDocuments[0];
 
 const {
   title, // string

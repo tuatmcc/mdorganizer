@@ -125,7 +125,7 @@ export class ModuleGenerator {
       documentConfig.documentCategory.charAt(0).toUpperCase() +
       documentConfig.documentCategory.slice(1);
 
-    const result = `import { ${documentType}Document } from './types';
+    const result = `import type { ${documentType}Document } from './types.d.ts';
 
 export default {
   documentCategory: '${documentConfig.documentCategory}',
