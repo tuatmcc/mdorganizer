@@ -29,18 +29,21 @@ export class ModuleGenerator {
   async generateAll(): Promise<CategoryModule[]> {
     for (const documentConfig of this.documentConfigs) {
       const paths = await glob(documentConfig.globPattern);
-      const documentModules = await Promise.all(
-        paths.map(async (path) => {
-          return {
+      const documentModules: DocumentModule[] = [];
+      paths.forEach(async (path) => {
+        try {
+          documentModules.push({
             rootPath: path,
             documentId: `${path
               .replace(/\\/g, '/')
               .replaceAll('/', '_')
               .replace('.md', '')}`,
             generatedModuleString: await this.generate(path, documentConfig),
-          } satisfies DocumentModule;
-        }),
-      );
+          });
+        } catch (e) {
+          console.log(`Skipping ${path} due to error: ${e.message}`);
+        }
+      });
 
       this.categoryModules = this.categoryModules.map((categoryModule) => {
         return {
