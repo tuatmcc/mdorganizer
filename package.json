@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
