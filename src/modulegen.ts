@@ -30,27 +30,26 @@ export class ModuleGenerator {
     for (const categoryConfig of this.categoryConfigs) {
       const paths = await glob(categoryConfig.globPattern);
       // generate modules for each document
-      const documentModules = await Promise.all(
-        paths
-          .map(async (path) => {
-            try {
-              return {
-                rootPath: path,
-                documentId: `${path
-                  .replace(/\\/g, '/')
-                  .replaceAll('/', '_')
-                  .replace('.md', '')}`,
-                generatedModuleString: await this.generate(
-                  path,
-                  categoryConfig,
-                ),
-              } satisfies DocumentModule;
-            } catch (e) {
-              console.log(`Skipping ${path} due to error: ${e.message}`);
-              return null;
-            }
-          })
-          .filter((documentModule) => documentModule !== null),
+      let documentModules = await Promise.all(
+        paths.map(async (path) => {
+          try {
+            return {
+              rootPath: path,
+              documentId: `${path
+                .replace(/\\/g, '/')
+                .replaceAll('/', '_')
+                .replace('.md', '')}`,
+              generatedModuleString: await this.generate(path, categoryConfig),
+            } satisfies DocumentModule;
+          } catch (e) {
+            console.log(`Skipping ${path} due to error: ${e.message}`);
+            return null;
+          }
+        }),
+      );
+
+      documentModules = documentModules.filter(
+        (documentModule) => documentModule !== null,
       );
 
       console.log(
