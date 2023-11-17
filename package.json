@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
@@ -28,7 +28,6 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "commander": "^11.1.0",
     "esbuild": "^0.17.19",
     "glob": "^10.2.6",
     "gray-matter": "^4.0.3",
