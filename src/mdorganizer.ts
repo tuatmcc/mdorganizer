@@ -1,12 +1,12 @@
 import { TypeGenerator } from './typegen';
 import { ModuleGenerator } from './modulegen';
-import { type DocumentConfig, type UserConfig } from './types';
+import { type CategoryConfig, type UserConfig } from './types';
 import { writeFile, mkdir } from 'fs/promises';
 
 export class MdOrganizer {
   private typeGenerator: TypeGenerator;
   private moduleGenerator: ModuleGenerator;
-  private documentConfigs: DocumentConfig[];
+  private documentConfigs: CategoryConfig[];
 
   constructor(config: UserConfig) {
     this.typeGenerator = new TypeGenerator(config);
@@ -43,12 +43,12 @@ export class MdOrganizer {
 
   async generateAllModules(): Promise<void> {
     const categoryModules = await this.moduleGenerator.generateAll();
+    console.log(categoryModules);
     for (const categoryModule of categoryModules) {
       for (const doc of categoryModule.documentModules) {
         await writeFile(
           `.mdorganizer/generated/${categoryModule.documentCategory}/${doc.documentId}.ts`,
           doc.generatedModuleString,
-          { flag: 'w+' },
         );
       }
 

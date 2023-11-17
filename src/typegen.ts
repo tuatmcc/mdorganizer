@@ -1,4 +1,4 @@
-import { DocumentConfig, UserConfig } from '@/types';
+import { CategoryConfig, UserConfig } from '@/types';
 
 export type DocumentCategoryType = {
   documentCategory: string;
@@ -6,15 +6,15 @@ export type DocumentCategoryType = {
 };
 
 export class TypeGenerator {
-  private documentConfigs: DocumentConfig[];
+  private categoryConfigs: CategoryConfig[];
   private generatedTypes: DocumentCategoryType[] = [];
 
   constructor(config: UserConfig) {
-    this.documentConfigs = config.documents;
+    this.categoryConfigs = config.documents;
   }
 
   generateAll(): DocumentCategoryType[] {
-    this.generatedTypes = this.documentConfigs.map((docsumentConfig) => {
+    this.generatedTypes = this.categoryConfigs.map((docsumentConfig) => {
       return {
         documentCategory: docsumentConfig.documentCategory,
         generatedTypeString: this.generate(docsumentConfig),
@@ -23,19 +23,19 @@ export class TypeGenerator {
     return this.generatedTypes;
   }
 
-  generate(documentConfig: DocumentConfig): string {
+  generate(categoryConfig: CategoryConfig): string {
     // Make sure the document type is capitalized
     const documentCategory =
-      documentConfig.documentCategory.charAt(0).toUpperCase() +
-      documentConfig.documentCategory.slice(1);
+      categoryConfig.documentCategory.charAt(0).toUpperCase() +
+      categoryConfig.documentCategory.slice(1);
     let fields = `export type ${documentCategory}Document = {\n`;
     fields += `  documentCategory: string;\n`;
     fields += `  globPattern: string;\n`;
     fields += `  rootPath: string;\n`;
     fields += `  content: string;\n`;
     fields += `  fields: {\n`;
-    for (const key in documentConfig.fields) {
-      const fieldConfig = documentConfig.fields[key];
+    for (const key in categoryConfig.fields) {
+      const fieldConfig = categoryConfig.fields[key];
       const required = fieldConfig.required ? '' : '?';
       fields += `    ${key}${required}: ${fieldConfig.type};\n`;
     }
