@@ -35,6 +35,10 @@ export default {
           type: 'string',
           required: true,
         },
+        tags: {
+          type: 'string[]',
+          after: (tags: string[]) => tags.map((tag) => tag.toLowerCase()),
+        },
       },
     },
   ],

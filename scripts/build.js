@@ -10,7 +10,7 @@ const options = {
   platform: 'node',
   target: 'node18',
   outdir: './dist',
-  outExtension: { '.js': '.bundle.js' },
+  outExtension: { '.js': '.bundle.mjs' },
   plugins: [nodeExternalsPlugin({ packagePath: 'package.json' })],
 };
 

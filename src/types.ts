@@ -1,9 +1,12 @@
-export type FieldTypes = 'string' | 'string[]' | 'number' | 'boolean';
+export type FieldTypeString = 'string' | 'string[]' | 'number' | 'boolean';
+
+export type FieldType = string | string[] | number | boolean;
 
 export type FieldConfig = {
-  type: FieldTypes;
+  type: FieldTypeString;
   required?: boolean;
-  after?: (value: FieldTypes | unknown) => typeof value;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  after?: (value: any) => typeof value;
 };
 
 export type DocumentConfig = {
