@@ -23,7 +23,7 @@ npm i -D mdorganizer
 1. Create `mdorganizer.config.ts` file.
 
 ```ts
-import { UserConfig } from './lib/type';
+import { UserConfig } from 'mdorganizer';
 
 export default {
   documents: [
@@ -62,7 +62,7 @@ npm run build
 
 `prebuild` script will be automatically run before `build`.
 
-Or, you can run command directly.
+Or, you can run command using `npx`.
 
 ```sh
 npx mdorganizer

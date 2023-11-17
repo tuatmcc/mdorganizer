@@ -1,7 +1,7 @@
 import { program } from 'commander';
-import { join } from 'path';
 import { UserConfig } from '@/types';
 import { MdOrganizer } from './mdorganizer';
+import { getConfig } from './config';
 
 export const generate = async (userConfig: UserConfig): Promise<void> => {
   const mdOrganizer = new MdOrganizer(userConfig);
@@ -14,21 +14,13 @@ export const generate = async (userConfig: UserConfig): Promise<void> => {
 
 export const main = async () => {
   program
-    .option('--config <path>', 'path to config file')
-    .action(async (options) => {
-      const configPath = options.config
-        ? options.config.replace(/\.ts$/, '')
-        : 'mdorganizer.config';
+    .action(async () => {
       try {
-        const config = await import(join(process.cwd(), configPath));
-        await generate(config.default);
+        const config = await getConfig();
+        await generate(config);
       } catch (err) {
-        console.error(
-          'Could not find mdorganizer.config.ts in the current directory or the config path specified.',
-        );
+        console.error(err);
       }
     })
     .parse(process.argv);
 };
-
-main();
