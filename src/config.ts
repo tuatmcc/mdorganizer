@@ -27,11 +27,11 @@ export const getConfig = async (): Promise<UserConfig> => {
       sourcemap: true,
       platform: 'node',
       absWorkingDir: process.cwd(),
-      outExtension: { '.js': '.js' },
+      outExtension: { '.js': '.mjs' },
     });
 
     const config = await import(
-      `${join(process.cwd(), tempDir, 'mdorganizer.config.js')}`
+      `${join(process.cwd(), tempDir, 'mdorganizer.config.mjs')}`
     );
 
     console.log('config file successfully loaded');

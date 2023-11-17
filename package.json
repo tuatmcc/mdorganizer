@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "url": "https://github.com/tuatmcc/mdorganizer",
     "type": "git"
   },
-  "exports": "./dist/index.bundle.js",
+  "exports": "./dist/index.bundle.mjs",
   "types": "./lib/type.d.ts",
   "type": "module",
   "scripts": {
