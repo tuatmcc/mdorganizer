@@ -87,8 +87,8 @@ export class MdOrganizer {
     );
 
     await writeFile(
-      '.mdorganizer/generated/index.d.ts',
-      `${noteComment}\n\nexport type * from './types';\n${this.documentConfigs
+      '.mdorganizer/generated/index.ts',
+      `${noteComment}\n\nexport type * from './types.d.ts';\n${this.documentConfigs
         .map((documentConfig) => {
           return `export * from './${documentConfig.documentCategory}';`;
         })
