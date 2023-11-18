@@ -32,7 +32,7 @@ export class TypeGenerator {
   globPattern: string;
   rootPath: string;
   content: string;
-    fields: {\n`;
+  fields: {\n`;
     for (const key in categoryConfig.fields) {
       const fieldConfig = categoryConfig.fields[key];
       const required = fieldConfig.required ? '' : '?';
