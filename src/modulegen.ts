@@ -1,6 +1,6 @@
-import { UserConfig, CategoryConfig } from '@/types';
-import { glob } from 'glob';
+import { CategoryConfig, UserConfig } from '@/types';
 import { readFile } from 'fs/promises';
+import { glob } from 'glob';
 import graymatter from 'gray-matter';
 import { v4 } from 'uuid';
 
@@ -44,13 +44,9 @@ export class ModuleGenerator {
       );
 
       // filter out nulls
-      documentModules = documentModules.filter(
-        (documentModule) => documentModule !== null,
-      );
+      documentModules = documentModules.filter((documentModule) => documentModule !== null);
 
-      console.log(
-        `Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`,
-      );
+      console.log(`Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`);
 
       this.categoryModules.push({
         documentCategory: categoryConfig.documentCategory,
@@ -69,10 +65,7 @@ export class ModuleGenerator {
    * The stringified version is a TypeScript object that can be imported
    * and used in the application.
    */
-  async generate(
-    rootPath: string,
-    documentConfig: CategoryConfig,
-  ): Promise<string> {
+  async generate(rootPath: string, documentConfig: CategoryConfig): Promise<string> {
     const { data, content } = graymatter(await readFile(rootPath, 'utf8'));
     // validate data against FieldsConfig
     for (const key in data) {
@@ -122,8 +115,7 @@ export class ModuleGenerator {
 
     const frontmatter = data;
     const documentType =
-      documentConfig.documentCategory.charAt(0).toUpperCase() +
-      documentConfig.documentCategory.slice(1);
+      documentConfig.documentCategory.charAt(0).toUpperCase() + documentConfig.documentCategory.slice(1);
 
     const result = `import type { ${documentType}Document } from './types.d.ts';
 
@@ -139,8 +131,7 @@ export default {
           return `${key}: '${frontmatter[key]}'`;
         } else if (Array.isArray(frontmatter[key])) {
           return `${key}: [${frontmatter[key].map(
-            (item: string, index: number) =>
-              `${index == 0 ? '' : ' '}'${item}'`,
+            (item: string, index: number) => `${index === 0 ? '' : ' '}'${item}'`,
           )}]`;
         } else {
           return `${key}: ${frontmatter[key]}`;
