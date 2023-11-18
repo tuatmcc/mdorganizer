@@ -4,11 +4,20 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "outDir": "./dist",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["./src/**/*", "./tests/**/*"]
+  "include": [
+    "./src/**/*",
+    "./tests/**/*"
+  ],
+  "exclude": [
+    "./node_modules/**/*",
+    "./dist"
+  ]
 }

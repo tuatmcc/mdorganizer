@@ -1,6 +1,6 @@
 import { UserConfig } from '@/types';
-import { MdOrganizer } from './mdorganizer';
 import { getConfig } from './config';
+import { MdOrganizer } from './mdorganizer';
 
 export const generate = async (userConfig: UserConfig): Promise<void> => {
   const mdOrganizer = new MdOrganizer(userConfig);

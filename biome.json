@@ -1,0 +1,49 @@
+{
+  "linter": {
+    "enabled": true,
+    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
+    "ignore": ["dist/**/*", "node_modules/**/*"],
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "noUnusedImports": "error"
+      },
+      "correctness": {
+        "all": true
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
+    "ignore": ["dist/**/*", "node_modules/**/*"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingComma": "all",
+      "quoteStyle": "single",
+      "semicolons": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "organizeImports": {
+    "enabled": true,
+    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
+    "ignore": ["dist/**/*", "node_modules/**/*"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}

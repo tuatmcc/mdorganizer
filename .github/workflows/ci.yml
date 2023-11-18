@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
+      - name: Install Dependendies
+        run: npm ci
+      - name: Run Lint & Format Check
+        run: npm run lint
+      - name: Build Test
+        run: npm run build
