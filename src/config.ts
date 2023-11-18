@@ -11,8 +11,6 @@ export const getConfig = async (): Promise<UserConfig> => {
     throw new Error('config file not found');
   }
 
-  console.log(`process.cwd(): ${process.cwd()}`);
-
   // const tempDir = 'mdorgnaizer_temp';
   // await mkdir(tempDir, { recursive: true });
   const tempDir = await mkdtemp('mdorgnaizer_temp', { encoding: 'utf-8' });

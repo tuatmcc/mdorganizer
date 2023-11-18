@@ -66,7 +66,7 @@ export class ModuleGenerator {
    * and used in the application.
    */
   async generate(rootPath: string, documentConfig: CategoryConfig): Promise<string> {
-    const { data, content } = graymatter(await readFile(rootPath, 'utf8'));
+    const { data, content } = graymatter(await readFile(rootPath, { encoding: 'utf8' }));
     // validate data against FieldsConfig
     for (const key in data) {
       // check if key is exists in fields
@@ -123,7 +123,15 @@ export default {
   documentCategory: '${documentConfig.documentCategory}',
   globPattern: '${documentConfig.globPattern}',
   rootPath: '${rootPath}',
-  content: '${content.replace(/\r\n|\n/g, '\\n').replace(/'/g, "\\'")}',
+  content: '${content
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/\\/g, '\\\\')
+    .replace(/\r\n|\n/g, '\\n')
+    .replace(/'/g, "\\'")}',
   fields: {
     ${Object.keys(frontmatter)
       .map((key) => {
@@ -139,7 +147,7 @@ export default {
       })
       .join(',\n    ')},
   },
-} satisfies ${documentType}Document;`;
+} satisfies ${documentType}Document;\n`;
 
     return result;
   }
