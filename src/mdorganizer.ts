@@ -67,7 +67,7 @@ export class MdOrganizer {
       exports += '];\n';
       await writeFile(
         `.mdorganizer/generated/${categoryModule.documentCategory}/index.ts`,
-        `${noteComment}\n\n${imports}\n\n${exports}`,
+        `${noteComment}\n\n${imports}\n${exports}`,
       );
     }
     return;
@@ -75,7 +75,7 @@ export class MdOrganizer {
 
   async generateIndexFiles(): Promise<void> {
     await writeFile(
-      '.mdorganizer/generated/type.d.ts',
+      '.mdorganizer/generated/types.d.ts',
       `${noteComment}\n\n${this.documentConfigs
         .map((documentConfig) => {
           return `export type * from './${documentConfig.documentCategory}/types.d.ts';\n`;
@@ -87,12 +87,12 @@ export class MdOrganizer {
     );
 
     await writeFile(
-      '.mdorganizer/generated/index.ts',
-      `${noteComment}\n${this.documentConfigs
+      '.mdorganizer/generated/index.d.ts',
+      `${noteComment}\n\nexport type * from './types';\n${this.documentConfigs
         .map((documentConfig) => {
-          return `export * from './${documentConfig.documentCategory}';\n`;
+          return `export * from './${documentConfig.documentCategory}';`;
         })
-        .join('\n')}`,
+        .join('\n')}\n`,
       {
         flag: 'w+',
       },
