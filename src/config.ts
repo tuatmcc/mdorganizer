@@ -1,11 +1,11 @@
-import { mkdtemp, readdir, rm } from 'fs/promises';
-import { build } from 'esbuild';
-import { UserConfig } from '@/types';
 import { join } from 'path';
+import { UserConfig } from '@/types';
+import { build } from 'esbuild';
+import { mkdtemp, readdir, rm } from 'fs/promises';
 
 export const getConfig = async (): Promise<UserConfig> => {
   const allFiles = await readdir(process.cwd());
-  const configFile = allFiles.find((path) => path == 'mdorganizer.config.ts');
+  const configFile = allFiles.find((path) => path === 'mdorganizer.config.ts');
 
   if (!configFile) {
     throw new Error('config file not found');
@@ -30,9 +30,7 @@ export const getConfig = async (): Promise<UserConfig> => {
       outExtension: { '.js': '.mjs' },
     });
 
-    const config = await import(
-      `${join(process.cwd(), tempDir, 'mdorganizer.config.mjs')}`
-    );
+    const config = await import(`${join(process.cwd(), tempDir, 'mdorganizer.config.mjs')}`);
 
     console.log('config file successfully loaded');
     await rm(join(process.cwd(), tempDir), {

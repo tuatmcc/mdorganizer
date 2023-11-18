@@ -1,6 +1,6 @@
+import { readFile } from 'fs/promises';
 import { expect, it } from 'vitest';
 import { DocumentCategoryType, TypeGenerator } from '../src/typegen';
-import { readFile } from 'fs/promises';
 
 it('generates type definitions', async () => {
   const config = await import('./mock/mdorganizer.config');

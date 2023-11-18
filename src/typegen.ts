@@ -26,14 +26,13 @@ export class TypeGenerator {
   generate(categoryConfig: CategoryConfig): string {
     // Make sure the document type is capitalized
     const documentCategory =
-      categoryConfig.documentCategory.charAt(0).toUpperCase() +
-      categoryConfig.documentCategory.slice(1);
-    let fields = `export type ${documentCategory}Document = {\n`;
-    fields += `  documentCategory: string;\n`;
-    fields += `  globPattern: string;\n`;
-    fields += `  rootPath: string;\n`;
-    fields += `  content: string;\n`;
-    fields += `  fields: {\n`;
+      categoryConfig.documentCategory.charAt(0).toUpperCase() + categoryConfig.documentCategory.slice(1);
+    let fields = `export type ${documentCategory}Document = {
+  documentCategory: string;
+  globPattern: string;
+  rootPath: string;
+  content: string;
+    fields: {\n`;
     for (const key in categoryConfig.fields) {
       const fieldConfig = categoryConfig.fields[key];
       const required = fieldConfig.required ? '' : '?';

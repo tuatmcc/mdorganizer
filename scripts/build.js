@@ -14,7 +14,7 @@ const options = {
   plugins: [nodeExternalsPlugin({ packagePath: 'package.json' })],
 };
 
-if (process.env.WATCH == 'true') {
+if (process.env.WATCH === 'true') {
   options.watch = {
     onRebuild(error, result) {
       if (error) {

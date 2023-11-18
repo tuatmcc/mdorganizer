@@ -3,7 +3,7 @@
 A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter.
 
 - Simple
-  - Very Few dependencies
+  - Few dependencies
 - Customizable
   - `globPattern` options for markdown files location
   - User defined front matter with type definition
