@@ -27,7 +27,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.19.6",
     "glob": "^10.2.6",
     "gray-matter": "^4.0.3",
     "uuid": "^9.0.1"
