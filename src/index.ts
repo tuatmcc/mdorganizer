@@ -8,7 +8,7 @@ export const generate = async (userConfig: UserConfig): Promise<void> => {
   await mdOrganizer.generateAllCategoryTypeFiles();
   await mdOrganizer.generateAllModules();
   await mdOrganizer.generateIndexFiles();
-  console.log('All files generated!');
+  console.info('All files generated!');
 };
 
 export const main = async () => {

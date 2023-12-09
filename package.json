@@ -16,7 +16,7 @@
     "start": "node ./bin/cli.js",
     "main": "tsx ./src/main.ts",
     "lint": "biome lint . && biome format .",
-    "lint:fix": "biome check --apply .",
+    "fmt": "biome check --apply .",
     "test": "vitest"
   },
   "bin": {

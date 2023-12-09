@@ -1,6 +1,6 @@
 import { BlogDocument } from './types';
 
-export default {
+export default ({
   documentCategory: 'blog',
   globPattern: 'tests/mock/content/blog/**/index.md',
   rootPath: 'tests/mock/content/blog/hello/index.md',
@@ -12,4 +12,4 @@ export default {
     bool: true,
     num: 1,
   },
-} satisfies BlogDocument;
+} satisfies BlogDocument);
