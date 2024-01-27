@@ -37,7 +37,7 @@ export class ModuleGenerator {
               generatedModuleString: await this.generate(path, categoryConfig),
             } satisfies DocumentModule;
           } catch (e) {
-            console.log(`Skipping ${path} due to error: ${e.message}`);
+            console.warn(`Skipping ${path} due to error: ${e.message}`);
             return null;
           }
         }),
@@ -46,7 +46,7 @@ export class ModuleGenerator {
       // filter out nulls
       documentModules = documentModules.filter((documentModule) => documentModule !== null);
 
-      console.log(`Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`);
+      console.info(`Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`);
 
       this.categoryModules.push({
         documentCategory: categoryConfig.documentCategory,
@@ -65,6 +65,8 @@ export class ModuleGenerator {
    * The stringified version is a TypeScript object that can be imported
    * and used in the application.
    */
+
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
   async generate(rootPath: string, documentConfig: CategoryConfig): Promise<string> {
     const { data, content } = graymatter(await readFile(rootPath, { encoding: 'utf8' }));
     // validate data against FieldsConfig
@@ -73,42 +75,29 @@ export class ModuleGenerator {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         const fieldName = data[key];
         const fieldConfig = documentConfig.fields[key];
-        if (fieldConfig) {
-          // validate required fields
-          if (fieldConfig.required && !fieldName) {
-            throw new Error(`Field ${key} is required`);
-          }
-          // validate field types
-          switch (fieldConfig.type) {
-            case 'string':
-              if (typeof fieldName !== 'string') {
-                throw new Error(`Field ${key} must be a string`);
-              }
-              break;
-            case 'string[]':
-              if (!Array.isArray(fieldName)) {
-                throw new Error(`Field ${key} must be an array`);
-              }
-              break;
-            case 'number':
-              if (typeof fieldName !== 'number') {
-                throw new Error(`Field ${key} must be a number`);
-              }
-              break;
-            case 'boolean':
-              if (typeof fieldName !== 'boolean') {
-                throw new Error(`Field ${key} must be a boolean`);
-              }
-              break;
-            default:
-              throw new Error(`Field ${key} has invalid type`);
-          }
-          // execute after function
-          if (fieldConfig.after) {
-            data[key] = fieldConfig.after(fieldName);
-          }
-        } else {
+        if (!fieldConfig) {
           throw new Error(`Field ${key} does not exist`);
+        }
+        // validate required fields
+        if (fieldConfig.required && !fieldName) {
+          throw new Error(`Field ${key} is required`);
+        }
+        // validate field types
+        if (fieldConfig.type === 'string' && typeof fieldName !== 'string') {
+          throw new Error(`Field ${key} must be a string`);
+        }
+        if (fieldConfig.type === 'string[]' && !Array.isArray(fieldName)) {
+          throw new Error(`Field ${key} must be an array`);
+        }
+        if (fieldConfig.type === 'number' && typeof fieldName !== 'number') {
+          throw new Error(`Field ${key} must be a number`);
+        }
+        if (fieldConfig.type === 'boolean' && typeof fieldName !== 'boolean') {
+          throw new Error(`Field ${key} must be a boolean`);
+        }
+        // execute after function
+        if (fieldConfig.after) {
+          data[key] = fieldConfig.after(fieldName);
         }
       }
     }
@@ -135,15 +124,18 @@ export default {
   fields: {
     ${Object.keys(frontmatter)
       .map((key) => {
+        // string
         if (typeof frontmatter[key] === 'string') {
           return `${key}: '${frontmatter[key]}'`;
-        } else if (Array.isArray(frontmatter[key])) {
+        }
+        // string[]
+        if (Array.isArray(frontmatter[key])) {
           return `${key}: [${frontmatter[key].map(
             (item: string, index: number) => `${index === 0 ? '' : ' '}'${item}'`,
           )}]`;
-        } else {
-          return `${key}: ${frontmatter[key]}`;
         }
+        // number, boolean
+        return `${key}: ${frontmatter[key]}`;
       })
       .join(',\n    ')},
   },

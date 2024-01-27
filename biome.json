@@ -1,15 +1,10 @@
 {
   "linter": {
     "enabled": true,
-    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
-    "ignore": ["dist/**/*", "node_modules/**/*"],
     "rules": {
-      "recommended": true,
+      "all": true,
       "nursery": {
         "noUnusedImports": "error"
-      },
-      "correctness": {
-        "all": true
       }
     }
   },
@@ -18,9 +13,7 @@
     "formatWithErrors": true,
     "indentStyle": "space",
     "lineWidth": 120,
-    "indentWidth": 2,
-    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
-    "ignore": ["dist/**/*", "node_modules/**/*"]
+    "indentWidth": 2
   },
   "javascript": {
     "formatter": {
@@ -31,19 +24,21 @@
       "semicolons": "always"
     }
   },
+  "organizeImports": {
+    "enabled": true
+  },
   "json": {
     "formatter": {
       "enabled": true
     }
   },
-  "organizeImports": {
-    "enabled": true,
-    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
-    "ignore": ["dist/**/*", "node_modules/**/*"]
-  },
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
+  },
+  "files": {
+    "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.js"],
+    "ignore": ["dist/**", "node_modules/**"]
   }
 }

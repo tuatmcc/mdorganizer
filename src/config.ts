@@ -30,7 +30,7 @@ export const getConfig = async (): Promise<UserConfig> => {
 
     const config = await import(`${join(process.cwd(), tempDir, 'mdorganizer.config.mjs')}`);
 
-    console.log('config file successfully loaded');
+    console.info('config file successfully loaded');
     await rm(join(process.cwd(), tempDir), {
       force: true,
       recursive: true,

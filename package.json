@@ -1,6 +1,6 @@
 {
   "name": "mdorganizer",
-  "version": "2.3.4",
+  "version": "2.4.1",
   "description": "A cli tool to convert Markdown into TypeScript Module",
   "author": "tuatmcc",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "start": "node ./bin/cli.js",
     "main": "tsx ./src/main.ts",
     "lint": "biome lint . && biome format .",
-    "lint:fix": "biome check --apply .",
+    "fmt": "biome check --apply .",
     "test": "vitest"
   },
   "bin": {
@@ -27,7 +27,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.19.6",
     "glob": "^10.2.6",
     "gray-matter": "^4.0.3",
     "uuid": "^9.0.1"
@@ -35,9 +35,8 @@
   "devDependencies": {
     "@biomejs/biome": "^1.3.3",
     "@types/uuid": "^9.0.7",
-    "@typescript-eslint/parser": "^6.7.4",
     "esbuild-node-externals": "^1.7.0",
     "tsx": "^4.1.2",
-    "vitest": "^0.34.6"
+    "vitest": "^1.0.4"
   }
 }
