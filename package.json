@@ -5,10 +5,13 @@
 	"author": "tuatmcc",
 	"license": "MIT",
 	"repository": {
-		"url": "https://github.com/tuatmcc/mdorganizer",
+		"url": "git+https://github.com/tuatmcc/mdorganizer.git",
 		"type": "git"
 	},
-	"exports": ["./dist/index.bundle.mjs", "./lib/types.d.ts"],
+	"exports": [
+		"./dist/index.bundle.mjs",
+		"./lib/types.d.ts"
+	],
 	"types": "./lib/types.d.ts",
 	"type": "module",
 	"scripts": {
@@ -20,7 +23,7 @@
 		"test": "vitest"
 	},
 	"bin": {
-		"mdorganizer": "./bin/cli.js"
+		"mdorganizer": "bin/cli.js"
 	},
 	"packageManager": "npm@10.1.0",
 	"engines": {
@@ -29,8 +32,7 @@
 	"dependencies": {
 		"esbuild": "^0.19.6",
 		"glob": "^10.2.6",
-		"gray-matter": "^4.0.3",
-		"uuid": "^9.0.1"
+		"gray-matter": "^4.0.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
