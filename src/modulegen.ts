@@ -1,148 +1,163 @@
-import { CategoryConfig, UserConfig } from '@/types';
-import { readFile } from 'fs/promises';
-import { glob } from 'glob';
-import graymatter from 'gray-matter';
-import { v4 } from 'uuid';
+import { readFile } from "node:fs/promises";
+import type { CategoryConfig, FieldConfig, UserConfig } from "@/types";
+import { glob } from "glob";
+import graymatter from "gray-matter";
 
 type DocumentModule = {
-  rootPath: string;
-  documentId: string;
-  generatedModuleString: string;
+	rootPath: string;
+	documentId: string;
+	generatedModuleString: string;
 };
 
 export type CategoryModule = {
-  documentCategory: string;
-  documentModules: DocumentModule[];
+	documentCategory: string;
+	documentModules: DocumentModule[];
 };
 
 export class ModuleGenerator {
-  private categoryConfigs: CategoryConfig[];
-  private categoryModules: CategoryModule[];
+	private categoryConfigs: CategoryConfig[];
+	private categoryModules: CategoryModule[];
 
-  constructor(userConfig: UserConfig) {
-    this.categoryConfigs = userConfig.documents;
-    this.categoryModules = [];
-  }
+	constructor(userConfig: UserConfig) {
+		this.categoryConfigs = userConfig.documents;
+		this.categoryModules = [];
+	}
 
-  async generateAll(): Promise<CategoryModule[]> {
-    for (const categoryConfig of this.categoryConfigs) {
-      const paths = await glob(categoryConfig.globPattern);
-      // generate modules for each document
-      let documentModules = await Promise.all(
-        paths.map(async (path) => {
-          try {
-            return {
-              rootPath: path,
-              documentId: `document__${v4().replace(/-/g, '_')}`,
-              generatedModuleString: await this.generate(path, categoryConfig),
-            } satisfies DocumentModule;
-          } catch (e) {
-            console.warn(`Skipping ${path} due to error: ${e.message}`);
-            return null;
-          }
-        }),
-      );
+	async generateAll(): Promise<CategoryModule[]> {
+		for (const categoryConfig of this.categoryConfigs) {
+			const paths = await glob(categoryConfig.globPattern);
+			// generate modules for each document
+			let documentModules = await Promise.all(
+				paths.map(async (path) => {
+					try {
+						return {
+							rootPath: path,
+							documentId: `document__${crypto.randomUUID().replace(/-/g, "_")}`,
+							generatedModuleString: await this.generate(path, categoryConfig),
+						} satisfies DocumentModule;
+					} catch (e) {
+						console.warn(`Skipping ${path} due to error: ${e.message}`);
+						return null;
+					}
+				}),
+			);
 
-      // filter out nulls
-      documentModules = documentModules.filter((documentModule) => documentModule !== null);
+			// filter out nulls
+			documentModules = documentModules.filter(
+				(documentModule) => documentModule !== null,
+			);
 
-      console.info(`Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`);
+			console.info(
+				`Generated ${documentModules.length} modules for ${categoryConfig.documentCategory}`,
+			);
 
-      this.categoryModules.push({
-        documentCategory: categoryConfig.documentCategory,
-        documentModules: documentModules,
-      });
-    }
-    return this.categoryModules;
-  }
+			this.categoryModules.push({
+				documentCategory: categoryConfig.documentCategory,
+				documentModules: documentModules,
+			});
+		}
+		return this.categoryModules;
+	}
 
-  /**
-   * @param {string} rootPath
-   * @returns {string}
-   * @memberof ModuleGenerator
-   * @description
-   * Parses a document and returns a stringified version of the Document.
-   * The stringified version is a TypeScript object that can be imported
-   * and used in the application.
-   */
+	/**
+	 * @param {string} rootPath
+	 * @returns {string}
+	 * @memberof ModuleGenerator
+	 * @description
+	 * Parses a document and returns a stringified version of the Document.
+	 * The stringified version is a TypeScript object that can be imported
+	 * and used in the application.
+	 */
+	private typeValidators: Record<string, (value: unknown) => boolean> = {
+		string: (value): boolean => typeof value === "string",
+		"string[]": Array.isArray,
+		number: (value): boolean => typeof value === "number",
+		boolean: (value): boolean => typeof value === "boolean",
+	};
 
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-  async generate(rootPath: string, documentConfig: CategoryConfig): Promise<string> {
-    const { data, content } = graymatter(await readFile(rootPath, { encoding: 'utf8' }));
-    // validate data against FieldsConfig
-    for (const key in data) {
-      // check if key is exists in fields
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const fieldName = data[key];
-        const fieldConfig = documentConfig.fields[key];
-        if (!fieldConfig) {
-          throw new Error(`Field ${key} does not exist`);
-        }
-        // validate required fields
-        if (fieldConfig.required && !fieldName) {
-          throw new Error(`Field ${key} is required`);
-        }
-        // validate field types
-        if (fieldConfig.type === 'string' && typeof fieldName !== 'string') {
-          throw new Error(`Field ${key} must be a string`);
-        }
-        if (fieldConfig.type === 'string[]' && !Array.isArray(fieldName)) {
-          throw new Error(`Field ${key} must be an array`);
-        }
-        if (fieldConfig.type === 'number' && typeof fieldName !== 'number') {
-          throw new Error(`Field ${key} must be a number`);
-        }
-        if (fieldConfig.type === 'boolean' && typeof fieldName !== 'boolean') {
-          throw new Error(`Field ${key} must be a boolean`);
-        }
-        // execute after function
-        if (fieldConfig.after) {
-          data[key] = fieldConfig.after(fieldName);
-        }
-      }
-    }
+	private validateFields(
+		data: unknown,
+		fields: Record<string, FieldConfig>,
+	): void {
+		for (const [key, value] of Object.entries(data)) {
+			const fieldConfig = fields[key];
 
-    const frontmatter = data;
-    const documentType =
-      documentConfig.documentCategory.charAt(0).toUpperCase() + documentConfig.documentCategory.slice(1);
+			if (!fieldConfig) {
+				throw new Error(`Field ${key} does not exist`);
+			}
 
-    const result = `import type { ${documentType}Document } from './types.d.ts';
+			if (fieldConfig.required && !value) {
+				throw new Error(`Field ${key} is required`);
+			}
+
+			const validator = this.typeValidators[fieldConfig.type];
+			if (!validator(value)) {
+				throw new Error(`Field ${key} must be a ${fieldConfig.type}`);
+			}
+		}
+	}
+
+	private escapeContent(content: string): string {
+		return content
+			.replace(/&lt;/g, "<")
+			.replace(/&gt;/g, ">")
+			.replace(/&quot;/g, '"')
+			.replace(/&#39;/g, "'")
+			.replace(/&amp;/g, "&")
+			.replace(/\\/g, "\\\\")
+			.replace(/\r\n|\n/g, "\\n")
+			.replace(/'/g, "\\'");
+	}
+
+	private serializeField(key: string, value: unknown): string {
+		if (typeof value === "string") {
+			return `${key}: '${value}'`;
+		}
+		if (Array.isArray(value)) {
+			const items = value.map((item, i) => `${i === 0 ? "" : " "}'${item}'`);
+			return `${key}: [${items}]`;
+		}
+		return `${key}: ${value}`;
+	}
+
+	async generate(
+		rootPath: string,
+		documentConfig: CategoryConfig,
+	): Promise<string> {
+		const { data, content } = graymatter(
+			await readFile(rootPath, { encoding: "utf8" }),
+		);
+
+		this.validateFields(data, documentConfig.fields);
+
+		// Apply after functions
+		for (const [key, value] of Object.entries(data)) {
+			const fieldConfig = documentConfig.fields[key];
+			if (fieldConfig?.after) {
+				data[key] = fieldConfig.after(value);
+			}
+		}
+
+		const documentType =
+			documentConfig.documentCategory.charAt(0).toUpperCase() +
+			documentConfig.documentCategory.slice(1);
+
+		const serializedFields = Object.entries(data)
+			.map(([key, value]) => this.serializeField(key, value))
+			.join(",\n    ");
+
+		return `import type { ${documentType}Document } from "./types.d.ts";
 
 export default {
-  documentCategory: '${documentConfig.documentCategory}',
-  globPattern: '${documentConfig.globPattern}',
-  rootPath: '${rootPath}',
-  content: '${content
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&')
-    .replace(/\\/g, '\\\\')
-    .replace(/\r\n|\n/g, '\\n')
-    .replace(/'/g, "\\'")}',
+  documentCategory: "${documentConfig.documentCategory}",
+  globPattern: "${documentConfig.globPattern}",
+  rootPath: "${rootPath}",
+  content: "${this.escapeContent(content)}",
   fields: {
-    ${Object.keys(frontmatter)
-      .map((key) => {
-        // string
-        if (typeof frontmatter[key] === 'string') {
-          return `${key}: '${frontmatter[key]}'`;
-        }
-        // string[]
-        if (Array.isArray(frontmatter[key])) {
-          return `${key}: [${frontmatter[key].map(
-            (item: string, index: number) => `${index === 0 ? '' : ' '}'${item}'`,
-          )}]`;
-        }
-        // number, boolean
-        return `${key}: ${frontmatter[key]}`;
-      })
-      .join(',\n    ')},
+    ${serializedFields},
   },
-} satisfies ${documentType}Document;\n`;
-
-    return result;
-  }
+} satisfies ${documentType}Document;`;
+	}
 }
 
 export default ModuleGenerator;

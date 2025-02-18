@@ -1,23 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "es2021",
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "outDir": "./dist",
-    "moduleResolution": "bundler",
-    "rootDir": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-  },
-  "include": [
-    "./src/**/*",
-    "./tests/**/*"
-  ],
-  "exclude": [
-    "./node_modules/**/*",
-    "./dist"
-  ]
+	"compilerOptions": {
+		"target": "es2021",
+		"module": "ESNext",
+		"esModuleInterop": true,
+		"outDir": "./dist",
+		"moduleResolution": "bundler",
+		"rootDir": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["./src/**/*", "./tests/**/*"],
+	"exclude": ["./node_modules/**/*", "./dist"]
 }
