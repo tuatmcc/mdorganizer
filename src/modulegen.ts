@@ -111,10 +111,10 @@ export class ModuleGenerator {
 
 	private serializeField(key: string, value: unknown): string {
 		if (typeof value === "string") {
-			return `${key}: '${value}'`;
+			return `${key}: "${value}"`;
 		}
 		if (Array.isArray(value)) {
-			const items = value.map((item, i) => `${i === 0 ? "" : " "}'${item}'`);
+			const items = value.map((item, i) => `${i === 0 ? "" : " "}"${item}"`);
 			return `${key}: [${items}]`;
 		}
 		return `${key}: ${value}`;

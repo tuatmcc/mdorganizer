@@ -23,6 +23,6 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignore": ["/bin/*", "/lib/*", "tests/mock/generated/*"]
+		"ignore": ["package.json", "/bin/*", "/lib/*", "tests/mock/generated/*"]
 	}
 }

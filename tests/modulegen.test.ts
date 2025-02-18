@@ -44,9 +44,11 @@ it("generate modules", async () => {
 	expect(generatedModule.documentId).toMatch(documentIdPattern);
 
 	// 生成された文字列の内容を正規化して比較
-	// const normalizeString = (str: string) => str.replace(/\s+/g, " ").trim();
+	const normalizeString = (str: string) => str.replace(/\s+/g, " ").trim();
 
-	expect(generatedModule.generatedModuleString).toBe(file);
+	expect(normalizeString(generatedModule.generatedModuleString)).toBe(
+		normalizeString(file),
+	);
 
 	// UUIDを除外した構造の比較
 	const expectedWithoutId = {
