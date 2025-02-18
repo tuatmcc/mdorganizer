@@ -1,3 +1,3 @@
-import { main } from './index';
+import { main } from "./index";
 
 await main();

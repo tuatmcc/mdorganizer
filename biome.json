@@ -1,47 +1,28 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "all": true,
-      "nursery": {
-        "noUnusedImports": "error"
-      },
-      "style": {
-        "noDefaultExport": "off"
-      }
-    }
-  },
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": true,
-    "indentStyle": "space",
-    "lineWidth": 120,
-    "indentWidth": 2
-  },
-  "javascript": {
-    "formatter": {
-      "jsxQuoteStyle": "double",
-      "quoteProperties": "asNeeded",
-      "trailingComma": "all",
-      "quoteStyle": "single",
-      "semicolons": "always"
-    }
-  },
-  "organizeImports": {
-    "enabled": true
-  },
-  "json": {
-    "formatter": {
-      "enabled": true
-    }
-  },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  },
-  "files": {
-    "ignore": ["/bin/", "/lib/"]
-  }
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignore": ["/bin/*", "/lib/*", "tests/mock/generated/*"]
+	}
 }

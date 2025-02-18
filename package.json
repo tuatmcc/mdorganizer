@@ -1,43 +1,43 @@
 {
-  "name": "mdorganizer",
-  "version": "2.4.2",
-  "description": "A cli tool to convert Markdown into TypeScript Module",
-  "author": "tuatmcc",
-  "license": "MIT",
-  "repository": {
-    "url": "https://github.com/tuatmcc/mdorganizer",
-    "type": "git"
-  },
-  "exports": "./dist/index.bundle.mjs",
-  "types": "./lib/types.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "node ./scripts/build.js",
-    "start": "node ./bin/cli.js",
-    "main": "tsx ./src/main.ts",
-    "lint": "biome check .",
-    "fmt": "biome check --apply .",
-    "test": "vitest"
-  },
-  "bin": {
-    "mdorganizer": "./bin/cli.js"
-  },
-  "packageManager": "npm@10.1.0",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "dependencies": {
-    "esbuild": "^0.19.6",
-    "glob": "^10.2.6",
-    "gray-matter": "^4.0.3",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
-    "@types/node": "^20.11.24",
-    "@types/uuid": "^9.0.7",
-    "esbuild-node-externals": "^1.7.0",
-    "tsx": "^4.1.2",
-    "vitest": "^1.0.4"
-  }
+	"name": "mdorganizer",
+	"version": "2.4.3",
+	"description": "A cli tool to convert Markdown into TypeScript Module",
+	"author": "tuatmcc",
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/tuatmcc/mdorganizer",
+		"type": "git"
+	},
+	"exports": "./dist/index.bundle.mjs",
+	"types": "./lib/types.d.ts",
+	"type": "module",
+	"scripts": {
+		"build": "node ./scripts/build.js",
+		"start": "node ./bin/cli.js",
+		"main": "tsx ./src/main.ts",
+		"lint": "biome check .",
+		"fmt": "biome check --write .",
+		"test": "vitest"
+	},
+	"bin": {
+		"mdorganizer": "./bin/cli.js"
+	},
+	"packageManager": "npm@10.1.0",
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"dependencies": {
+		"esbuild": "^0.19.6",
+		"glob": "^10.2.6",
+		"gray-matter": "^4.0.3",
+		"uuid": "^9.0.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/node": "^20.11.24",
+		"@types/uuid": "^9.0.7",
+		"esbuild-node-externals": "^1.7.0",
+		"tsx": "^4.1.2",
+		"vitest": "^1.0.4"
+	}
 }
