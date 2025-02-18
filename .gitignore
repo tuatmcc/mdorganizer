@@ -3,6 +3,6 @@
 /.mdorganizer/
 /content/
 /biome-*
-/.vim/
+/.direnv/
 
 mdorganizer.config.[jt]s
