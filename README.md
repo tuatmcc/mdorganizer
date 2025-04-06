@@ -1,3 +1,6 @@
+> [!WARNING]
+> We are Archiving this repository because we found a better alternative. See [Velite](https://velite.js.org/)
+
 # Markdown-Organizer
 
 A CLI tool to convert markdown files into TypeScript modules, with fully typed front matter.
